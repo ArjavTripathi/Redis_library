@@ -1,13 +1,13 @@
-
 from io import BytesIO
 
 
 class Protocol(object):
     def __init__(self):
-        from server import Error, Disconnect, CommandError
+        from server import Error, Disconnect, CommandError, logger
         self.Disconnect = Disconnect
         self.CommandError = CommandError
         self.Error = Error
+        self.logger = logger
         self.handlers = {
             '+': self.handle_simple_string,
             '-': self.handle_error,
@@ -18,12 +18,15 @@ class Protocol(object):
         }
 
     def handle_request(self, socket_file):
+        self.logger.info('Protocol: Handling request...')
         first_byte = socket_file.read(1)
         if not first_byte:
+            self.logger.debug('Protocol: First byte not found. Disconnecting... ')
             raise self.Disconnect()
         try:
             return self.handlers[first_byte](socket_file)
         except KeyError:
+            self.logger.error('Protocol: Bad request with key: ' + first_byte)
             raise self.CommandError('bad request')
         
 
@@ -54,8 +57,9 @@ class Protocol(object):
         buf = BytesIO()
         self._write(buf, data)
         buf.seek(0)
-        socket_file.write(buf.getvalue())
-        socket_file.flush()
+        stuffToWrite = buf.getvalue()
+        socket_file.write(stuffToWrite)
+        #socket_file.flush()
 
 
     def _write(self, buf, data):
@@ -71,7 +75,8 @@ class Protocol(object):
         elif isinstance(data, self.Error):
             buf.write(bytes('-%s\r\n' % self.Error.message, 'utf-8'))
         elif isinstance(data, (list, tuple)):
-            buf.write(bytes('*%s\r\n' % int(len(data)), 'utf-8'))
+            toWrite = bytes('*%s\r\n' % int(len(data)), 'utf-8')
+            buf.write(toWrite)
             for item in data:
                 self._write(buf, item)
         elif isinstance(data, dict):
