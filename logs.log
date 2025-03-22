@@ -1,48 +1,8 @@
-2025-03-18 21:27:20,406 - Server starting... 
-
-2025-03-18 21:28:06,050 - Server starting... 
-
-2025-03-18 21:29:16,059 - Server starting... 
-
-2025-03-18 21:29:20,356 - Client: Connected to host: 127.0.0.1 on port: 31337 
-
-2025-03-18 21:29:20,356 - Protocol: Handling request... 
-
-2025-03-18 21:29:20,356 - Connection received: 127.0.0.1:58942 
-
-2025-03-18 21:29:20,356 - Protocol: Handling request... 
-
-2025-03-18 21:29:58,897 - Protocol: First byte not found. Disconnecting...  
-
-2025-03-18 21:30:00,278 - Server starting... 
-
-2025-03-18 21:30:27,556 - Client: Connected to host: 127.0.0.1 on port: 31337 
-
-2025-03-18 21:30:27,556 - Protocol: Handling request... 
-
-2025-03-18 21:30:27,556 - Connection received: 127.0.0.1:59034 
-
-2025-03-18 21:30:27,558 - Protocol: Handling request... 
-
-2025-03-18 21:31:06,785 - Client: Called initially 
-
-2025-03-18 21:31:09,772 - Connection received: 127.0.0.1:59064 
-
-2025-03-18 21:31:09,772 - Protocol: Handling request... 
-
-2025-03-18 21:31:10,396 - Client: Connected to host: 127.0.0.1 on port: 31337 
-
-2025-03-18 21:31:40,806 - Protocol: First byte not found. Disconnecting...  
-
-2025-03-18 21:31:41,947 - Server starting... 
-
-2025-03-18 21:31:49,692 - Client: Called initially 
-
-2025-03-18 21:31:49,716 - Client: Connected to host: 127.0.0.1 on port: 31337 
-
-2025-03-18 21:31:49,716 - Protocol: Handling request... 
-
-2025-03-18 21:31:49,716 - Connection received: 127.0.0.1:59127 
-
-2025-03-18 21:31:49,717 - Protocol: Handling request... 
-
+2025-03-21:19:45:20,135 INFO [server.py:run:105] Server starting...
+2025-03-21:19:46:01,906 INFO [Client.py:__init__:11] Client: Called initially
+2025-03-21:19:46:01,930 INFO [Client.py:__init__:16] Client: Connected to host: 127.0.0.1 on port: 31337
+2025-03-21:19:46:01,930 DEBUG [Client.py:__init__:25] Client: Socket file could not be made. Exception: Logger.log() missing 1 required positional argument: 'msg'
+2025-03-21:19:46:01,930 INFO [ProtocolHandler.py:write_response:69] Protocol: Socket file has been written to
+2025-03-21:19:46:01,930 INFO [ProtocolHandler.py:handle_request:21] Protocol: Reading socket file...
+2025-03-21:19:46:01,930 INFO [server.py:connection_handler:44] Connection received: 127.0.0.1:52355
+2025-03-21:19:46:01,930 INFO [ProtocolHandler.py:handle_request:21] Protocol: Reading socket file...

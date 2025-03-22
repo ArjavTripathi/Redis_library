@@ -6,7 +6,8 @@ from socket import error as socket_error
 from ProtocolHandler import Protocol
 import logging
 
-logging.basicConfig(filename="logs.log", format='%(asctime)s - %(message)s \n', filemode='a')
+logging.basicConfig(filename="logs.log", format='%(asctime)s,%(msecs)03d %(levelname)-s [%(filename)s:%(funcName)s:%(lineno)d] %(message)s',
+    datefmt='%Y-%m-%d:%H:%M:%S', filemode='a')
 global logger
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
@@ -51,6 +52,8 @@ class Server(object):
             except Disconnect:
                 logger.info('Client went away: %s:%s' % address)
                 break
+            except ConnectionResetError:
+                logger.info('Connection closed forcefully by host.')
 
             try:
                 response = self.get_response(data)

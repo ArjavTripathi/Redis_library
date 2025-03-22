@@ -1,7 +1,6 @@
 from ProtocolHandler import Protocol
 from gevent import socket
 from server import CommandError, Error, logger
-import logging
 
 
 
@@ -18,7 +17,13 @@ class Client(object):
         except ConnectionError:
             logger.debug('Client: error connecting to host: ' + host + ' on port: ' + str(port))
 
-        self._fh = self._socket.makefile('rwb')
+     
+        try:
+            self._fh = self._socket.makefile('rwb')
+            logger.log('Client: Socket file made')
+        except Exception:
+            logger.debug('Client: Socket file could not be made. Exception:')
+            
     
     def execute(self, *args):
         self._protocol.write_response(self._fh, args)

@@ -18,12 +18,18 @@ class Protocol(object):
         }
 
     def handle_request(self, socket_file):
-        self.logger.info('Protocol: Handling request...')
-        first_byte = socket_file.read(1)
+        self.logger.info('Protocol: Reading socket file...')
+        try:
+            first_byte = socket_file.read(1)
+        except Exception as e:
+            self.logger.info('Protocol: Issue with reading socket file. Exception: ' + str(e))
+            raise self.Disconnect()
+
         if not first_byte:
             self.logger.debug('Protocol: First byte not found. Disconnecting... ')
             raise self.Disconnect()
         try:
+            self.logger.debug('Protocol: Socket file read successfully')
             return self.handlers[first_byte](socket_file)
         except KeyError:
             self.logger.error('Protocol: Bad request with key: ' + first_byte)
@@ -58,7 +64,12 @@ class Protocol(object):
         self._write(buf, data)
         buf.seek(0)
         stuffToWrite = buf.getvalue()
-        socket_file.write(stuffToWrite)
+        try:
+            socket_file.write(stuffToWrite)
+            self.logger.info('Protocol: Socket file has been written to')
+        except Exception as e:
+            self.logger.info('Protocol: Socket file could not be written to. Closing connection...')
+            raise self.Disconnect()
         #socket_file.flush()
 
 
